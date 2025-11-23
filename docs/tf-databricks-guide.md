@@ -279,7 +279,7 @@ Then run the following commands:
     2. Nhấp vào Settings (góc phải trên)
     3. Chọn Developer
     4. Chọn Personal access tokens
-    5. Nhấp Generate new token: dapi66213e59572cda0d2514d00cd604e827-3
+    5. Nhấp Generate new token
     6. Copy token
 
 2. Update `main.tf`
@@ -306,7 +306,7 @@ variable "databricks_token" {
 4. Create `terraform.tfvars`
 
 ```hcl
-databricks_token = "dapi66213e59572cda0d2514d00cd604e827-3"
+databricks_token = "dapi..."
 ```
 
 5. Run terraform commands:
