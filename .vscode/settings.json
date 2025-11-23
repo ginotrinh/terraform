@@ -1,0 +1,77 @@
+{
+    "editor.links": false,
+    "editor.minimap.maxColumn": 100,
+    "editor.minimap.renderCharacters": true,
+    "editor.minimap.scale": 1,
+    "editor.useTabStops": true,
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrapColumn": 100,
+    "editor.wrappingIndent": "indent",
+    "editor.autoIndent": "full",
+    "editor.insertSpaces": true,
+    "editor.indentSize": "tabSize",
+    "editor.tabSize": 4,
+    "editor.fontFamily": "'Iosevka Curly', 'Monospace Semibold', 'Iosevka Fixed Curly Slab Semibold', 'Iosevka Term SS04 Medium', 'SF Mono','Monaco', 'Consolas', 'monospace'",
+    "editor.fontWeight": "normal",
+    "editor.fontSize": 17,
+    "editor.foldingStrategy": "indentation",
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 100,
+    "files.autoSaveWhenNoErrors": false,
+    "files.autoSaveWorkspaceFilesOnly": false,
+    "files.encoding": "utf8",
+    // The default end of line character.
+    //  - \n: LF
+    //  - \r\n: CRLF
+    //  - auto: Uses operating system specific end of line character.
+    "files.eol": "\n",
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true
+    },
+    "files.insertFinalNewline": false,
+    "explorer.enableDragAndDrop": true,
+    "explorer.enableUndo": true,
+    "explorer.fileNesting.expand": true,
+
+    // Overrides colors from the currently selected color theme.
+    "workbench.colorCustomizations": {
+        "titleBar.activeBackground": "#2c3e50",
+        "titleBar.activeForeground": "#95a5a6",
+        "titleBar.inactiveBackground": "#2c3e50",
+        "titleBar.inactiveForeground": "#95a5a6",
+        "titleBar.border": "#2c3e50",
+        "activityBar.background": "#2c3e50",
+        "activityBar.foreground": "#95a5a6",
+        "statusBar.debuggingBackground": "#2c3e50",
+        "statusBar.debuggingForeground": "#95a5a6",
+        "iLoveWorkSpaceColors": false,
+        "iLoveWorkSpaceRandom": false
+    },
+    "workbench.tree.indent": 20,
+    "workbench.tree.renderIndentGuides": "always",
+    "workbench.tree.expandMode": "singleClick",
+
+    // Setup cygwin as a default terminal for VSCode
+    "terminal.integrated.profiles.windows": {
+        "Cygwin": {
+            "path": "d:\\Applications\\Linux_Apps\\Cygwin\\bin\\bash.exe",
+            "args": ["--login"]
+        }
+    },
+    "terminal.integrated.defaultProfile.windows": "Cygwin",
+
+    // Setup SSH first, ssh-copy-id root@172.28.219.197. Sync
+    "sync-rsync.executable": "/usr/bin/rsync",
+    "sync-rsync.shell": "/usr/bin/ssh -p 22",
+    "sync-rsync.remote": "root@172.28.219.197:/opt/giutils/testScripts/",
+    "sync-rsync.local": "d:\\Personal\\GinoNotes\\SOURCES\\CENTER-AI\\",
+    "sync-rsync.onSaveIndividual": true,
+    "sync-rsync.cygpath": "d:\\Applications\\Linux_Apps\\Cygwin\\bin\\cygpath.exe",
+    "sync-rsync.executableShell": "d:\\Applications\\Linux_Apps\\Cygwin\\bin\\bash.exe",
+    "sync-rsync.onSave": true,
+    "sync-rsync.chmod": "Du=rwx,Fu=rwx"
+}
