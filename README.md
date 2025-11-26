@@ -2,6 +2,15 @@
 My terraform project
 
 ## Usage
+
+1. Login to the Azure portal
+
+```bash
+az login
+```
+
+
+
 ```bash
 terraform -chdir=env/dev init
 

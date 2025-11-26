@@ -1,0 +1,60 @@
+#!/bin/bash
+
+# This script will automatically create the storage account & blob container in AZ portal
+
+# 1. Define some variables
+RESOURCE_GROUP="gino-rg-tf-backend"
+STORAGE_ACCOUNT_NAME="tfstate$(date +%s)"  # Phải globally unique
+CONTAINER_NAME="tfstate"
+LOCATION="Southeast Asia"
+SUBSCRIPTION_ID="8d42870d-3e7a-48d8-8dcf-8b20ed4c5ad6"
+
+# 2. Create resource group
+echo "Creating resource group..."
+az group create \
+    --name $RESOURCE_GROUP \
+    --location "$LOCATION"
+
+# 3. Create storage account
+echo "Creating storage account..."
+az storage account create \
+    --resource-group $RESOURCE_GROUP \
+    --name $STORAGE_ACCOUNT_NAME \
+    --location "$LOCATION" \
+    --sku Standard_LRS \
+    --kind StorageV2 \
+    --encryption-services blob \
+    --https-only true \
+    --min-tls-version TLS1_2
+
+# 4. Obtain the storage account key
+echo "Obtaining the storage account's key..."
+ACCOUNT_KEY=$(az storage account keys list \
+    --resource-group $RESOURCE_GROUP \
+    --account-name $STORAGE_ACCOUNT_NAME \
+    --query '[0].value' -o tsv)
+
+# 5. Create the blob container using storage account's key
+echo "Creating the blob container using archived storage account's key..."
+az storage container create \
+    --name $CONTAINER_NAME \
+    --account-name $STORAGE_ACCOUNT_NAME \
+    --account-key $ACCOUNT_KEY
+
+# 6. Enable soft delete mode (recovery)
+echo "Enabled software delete mode for the storage account..."
+az storage blob service-properties delete-policy update \
+    --account-name $STORAGE_ACCOUNT_NAME \
+    --account-key $ACCOUNT_KEY \
+    --enable true \
+    --days-retained 7
+
+# 7. Print the result after all.
+echo "Result:"
+echo "- Storage Account: $STORAGE_ACCOUNT_NAME"
+echo "- Container: $CONTAINER_NAME"
+echo "- Resource Group: $RESOURCE_GROUP"
+#   Result:
+#   -   Storage Account: tfstate1764145743
+#   -   Container: tfstate
+#   -   Resource Group: gino-rg-tf-backend

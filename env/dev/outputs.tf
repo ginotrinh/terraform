@@ -3,6 +3,6 @@ output "databricks_workspace_url" {
 }
 
 output "service_principal_id" {
-  value = databricks_service_principal.terraform.id
+  value     = databricks_service_principal.terraform.id
   sensitive = true
 }
