@@ -1,8 +1,8 @@
-terraform {
-	backend "azurerm" {
-		resource_group_name  = "gino-rg-tf-backend"
-		storage_account_name = "tfstate1764145743"
-		container_name       = "tfstate"
-		key                  = "prod/prod.terraform.tfstate"
-	}
-}
+# terraform {
+# 	backend "azurerm" {
+# 		resource_group_name  = "gino-rg-tf-backend"
+# 		storage_account_name = "tfstate1764145743"
+# 		container_name       = "tfstate"
+# 		key                  = "prod/prod.terraform.tfstate"
+# 	}
+# }
