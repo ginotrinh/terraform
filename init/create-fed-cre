@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Variables
+APP_ID=$(az ad sp list --display-name "tf-dtb-sp" --query "[0].appId" -o tsv)
+GITHUB_ORG="ginotrinh"
+GITHUB_REPO="terraform"
+
+> $env:APP_ID = "57d60e9f-9cf7-46f7-9737-1cbd6a8318b8"
+> $env:GINOBLOG_API_KEY
+
+# Create federated credential for main branch
+az ad app federated-credential create --id 57d60e9f-9cf7-46f7-9737-1cbd6a8318b8 --parameters '{ 
+        "name": "github-main-branch", 
+        "issuer": "https://token.actions.githubusercontent.com",  
+        "subject": "repo:'"ginotrinh"'/'"terraform"':ref:refs/heads/main", 
+        "audiences": ["api://AzureADTokenExchange"] 
+    }'
+
+echo "✅ Created federated credential for main branch"
+
+# OPTIONAL: Create for PR/all branches
+az ad app federated-credential create \
+  --id $APP_ID \
+  --parameters '{
+    "name": "github-pull-requests",
+    "issuer": "https://token.actions.githubusercontent.com",
+    "subject": "repo:'"$GITHUB_ORG"'/'"$GITHUB_REPO"':pull_request",
+    "audiences": ["api://AzureADTokenExchange"]
+  }'
+
+echo "✅ Created federated credential for pull requests"

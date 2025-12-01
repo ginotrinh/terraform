@@ -30,7 +30,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. ⭐ Login to Azure using OIDC (NO STORED CREDENTIALS!)
+      # 2. Login with OIDC (Federated Credentials)
       - name: Azure Login with OIDC
         uses: azure/login@v2
         with:
