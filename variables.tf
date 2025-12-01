@@ -1,17 +1,17 @@
-variable application_name {
+variable "application_name" {
   type        = string
   description = "The application name"
-}
-
-variable primary_location {
-  type        = string
-  default     = "Southeast Asia"
-  description = "Azure primary region"
 }
 
 variable "environment_name" {
   type        = string
   description = "Environment name (dev, staging, prod)"
+}
+
+variable "primary_location" {
+  type        = string
+  default     = "Southeast Asia"
+  description = "Azure primary region"
 }
 
 variable "azure_subscription_id" {
@@ -38,25 +38,19 @@ variable "azure_client_secret" {
   description = "Azure Service Principal Client Secret"
 }
 
+variable "key_vault_name" {
+  type        = string
+  description = "Azure Key Vault name"
+}
+
+variable "databricks_sku" {
+  type        = string
+  default     = "STANDARD"
+  description = "Databricks SKU"
+}
+
 variable "tags" {
   type        = map(string)
   default     = {}
-  description = "Common tags"
+  description = "Common Tags"
 }
-
-# variable "subscription_id" {
-#   type      = string
-#   sensitive = true
-# }
-# variable "client_id" {
-#   type      = string
-#   sensitive = true
-# }
-# variable "client_secret" {
-#   type      = string
-#   sensitive = true
-# }
-# variable "tenant_id" {
-#   type      = string
-#   sensitive = true
-# }

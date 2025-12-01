@@ -1,6 +1,17 @@
-# output "databricks_workspace_url" {
-#   value = azurerm_databricks_workspace.main.workspace_url
-# }
+output "databricks_workspace_id" {
+  value       = azurerm_databricks_workspace.main.id
+  description = "Databricks Workspace ID"
+}
+
+output "databricks_workspace_name" {
+  value       = azurerm_databricks_workspace.main.name
+  description = "Databricks Workspace Name"
+}
+
+output "databricks_workspace_url" {
+  value = azurerm_databricks_workspace.main.workspace_url
+  description = "Databricks Workspace URL"
+}
 
 # output "service_principal_id" {
 #   value     = databricks_service_principal.terraform.id

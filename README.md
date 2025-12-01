@@ -19,7 +19,9 @@ az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $A
 # Execute some terraform commands
 terraform init
 terraform validate
-terraform plan  -var-file=./env/dev/dev.tfvars
+terraform plan -var-file ./env/dev/dev.tfvars -out plan.tfplan
+terraform plan  -chdir=env/dev -out=gino.tfplan
+
 terraform apply -var-file=./env/dev/dev.tfvars
 ```
 
