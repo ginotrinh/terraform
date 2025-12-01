@@ -29,8 +29,13 @@ az login
 
 SUBSCRIPTION_ID="8d42870d-3e7a-48d8-8dcf-8b20ed4c5ad6"
 TENANT_ID="995e9592-80c4-4aa3-b509-dd37e0571c05"
-GITHUB_ORG="your-github-org"
-GITHUB_REPO="your-repo-name"
+GITHUB_ORG="github.com"
+GITHUB_REPO="terraform"
+
+az ad sp create-for-rbac \
+  --name "github-${GITHUB_REPO}" \
+  --role "DevOps" \
+  --scopes "/subscriptions/${SUBSCRIPTION_ID}"
 ```
 
 
