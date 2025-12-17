@@ -43,14 +43,10 @@ jobs:
       - name: Retrieve Secrets from Key Vault
         uses: azure/CLI@v2
         with:
-          azcliversion: latest
+          azcliversion: '2.55.0'
           inlineScript: |
             # Exit on error
             set -e
-
-            # Set DNS nameservers inside the container
-            echo "nameserver 8.8.8.8" | tee /etc/resolv.conf > /dev/null
-            echo "nameserver 1.1.1.1" | tee -a /etc/resolv.conf > /dev/null
 
             # Get credentials from Key Vault
             KEYVAULT_NAME="${{ secrets.AZURE_KEYVAULT_NAME }}"
