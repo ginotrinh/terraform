@@ -49,8 +49,8 @@ jobs:
             set -e
 
             # Set DNS nameservers inside the container
-            echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf > /dev/null
-            echo "nameserver 1.1.1.1" | sudo tee -a /etc/resolv.conf > /dev/null
+            echo "nameserver 8.8.8.8" | tee /etc/resolv.conf > /dev/null
+            echo "nameserver 1.1.1.1" | tee -a /etc/resolv.conf > /dev/null
 
             # Get credentials from Key Vault
             KEYVAULT_NAME="${{ secrets.AZURE_KEYVAULT_NAME }}"
