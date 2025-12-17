@@ -12,7 +12,7 @@ env:
   WORKING_DIR: '.'
 
 permissions:
-  id-token: write       # ⭐ Required for OIDC
+  id-token: write       # Required for OIDC
   contents: read        # Checkout
   pull-requests: write  # PR comments
 
@@ -38,20 +38,33 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      # 3. ⭐ Retrieve secrets from Key Vault
+      # 3. Retrieve secrets from Key Vault
       - name: Retrieve Secrets from Key Vault
-        uses: azure/cli@v1
+        uses: azure/CLI@v2
         with:
           azcliversion: latest
           inlineScript: |
             # Get credentials from Key Vault
             KEYVAULT_NAME="${{ secrets.AZURE_KEYVAULT_NAME }}"
             
-            CLIENT_ID=$(az keyvault secret show --vault-name $KEYVAULT_NAME --name azure-client-id --query value -o tsv)
-            CLIENT_SECRET=$(az keyvault secret show --vault-name $KEYVAULT_NAME --name azure-client-secret --query value -o tsv)
-            TENANT_ID=$(az keyvault secret show --vault-name $KEYVAULT_NAME --name azure-tenant-id --query value -o tsv)
-            SUBSCRIPTION_ID=$(az keyvault secret show --vault-name $KEYVAULT_NAME --name azure-subscription-id --query value -o tsv)
-            
+            CLIENT_ID=$(az keyvault secret show \
+                    --vault-name $KEYVAULT_NAME \
+                    --name azure-client-id \
+                    --query value -o tsv \
+                    --only-show-errors)
+            CLIENT_SECRET=$(az keyvault secret show \
+                    --vault-name $KEYVAULT_NAME \
+                    --name azure-client-secret \
+                    --query value -o tsv)
+            TENANT_ID=$(az keyvault secret show \
+                    --vault-name $KEYVAULT_NAME \
+                    --name azure-tenant-id \
+                    --query value -o tsv)
+            SUBSCRIPTION_ID=$(az keyvault secret show \
+                    --vault-name $KEYVAULT_NAME \
+                    --name azure-subscription-id \
+                    --query value -o tsv)
+          
             # Mask secrets in logs
             echo "::add-mask::$CLIENT_ID"
             echo "::add-mask::$CLIENT_SECRET"

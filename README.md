@@ -9,6 +9,7 @@ My terraform project
 az login
 ```
 
+2. Run tasks on the local first
 ```bash
 # Get information from the script
 source ./init/export-vars
@@ -23,6 +24,22 @@ terraform plan -var-file ./env/dev/dev.tfvars -out plan.tfplan
 terraform plan  -chdir=env/dev -out=gino.tfplan
 
 terraform apply -var-file=./env/dev/dev.tfvars
+```
+
+3. Fix Key Vault Network Rules
+```bash
+# Allow GitHub-hosted runner IPs (GitHub publishes IP ranges)
+az keyvault network-rule add \
+  --resource-group <YOUR_RESOURCE_GROUP> \
+  --name <YOUR_KEYVAULT_NAME> \
+  --ip-address 13.83.0.0/16  # GitHub Actions IP range (check GitHub's published ranges)
+
+# OR: Allow all Azure services
+az keyvault update \
+  --resource-group <YOUR_RESOURCE_GROUP> \
+  --name <YOUR_KEYVAULT_NAME> \
+  --bypass AzureServices \
+  --default-action Deny
 ```
 
 ```bash
