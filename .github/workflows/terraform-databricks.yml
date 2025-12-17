@@ -41,55 +41,52 @@ jobs:
       # 3. Retrieve secrets from Key Vault by modifying retrieval with beter 
       # error handling
       - name: Retrieve Secrets from Key Vault
-        uses: azure/CLI@v2
-        with:
-          azcliversion: latest
-          inlineScript: |
-            # Exit on error
-            set -e
-            
-            # Get credentials from Key Vault
-            KEYVAULT_NAME="${{ secrets.AZURE_KEYVAULT_NAME }}"
-
-            # Add error handling with retries
-            for i in {1..3}; do
-              echo "Attempt $i/3 to retrieve secrets..."
-
-              CLIENT_ID=$(az keyvault secret show \
-                      --vault-name $KEYVAULT_NAME \
-                      --name azure-client-id \
-                      --query value -o tsv 2>/dev/null) && break
-              
-              if [ $i -lt 3 ]; then sleep 10; fi
-            done
-
-            CLIENT_SECRET=$(az keyvault secret show \
-                    --vault-name $KEYVAULT_NAME \
-                    --name azure-client-secret \
-                    --query value -o tsv)
-
-            TENANT_ID=$(az keyvault secret show \
-                    --vault-name $KEYVAULT_NAME \
-                    --name azure-tenant-id \
-                    --query value -o tsv)
-
-            SUBSCRIPTION_ID=$(az keyvault secret show \
-                    --vault-name $KEYVAULT_NAME \
-                    --name azure-subscription-id \
-                    --query value -o tsv)
+        run: |
+          # Exit on error
+          set -e
           
-            # Mask secrets in logs
-            echo "::add-mask::$CLIENT_ID"
-            echo "::add-mask::$CLIENT_SECRET"
-            echo "::add-mask::$TENANT_ID"
-            echo "::add-mask::$SUBSCRIPTION_ID"
+          # Get credentials from Key Vault
+          KEYVAULT_NAME="${{ secrets.AZURE_KEYVAULT_NAME }}"
+
+          # Add error handling with retries
+          for i in {1..3}; do
+            echo "Attempt $i/3 to retrieve secrets..."
+
+            CLIENT_ID=$(az keyvault secret show \
+                    --vault-name $KEYVAULT_NAME \
+                    --name azure-client-id \
+                    --query value -o tsv 2>/dev/null) && break
             
-            # Export as environment variables for Terraform
-            echo "TF_VAR_azure_client_id=$CLIENT_ID" >> $GITHUB_ENV
-            echo "TF_VAR_azure_client_secret=$CLIENT_SECRET" >> $GITHUB_ENV
-            echo "TF_VAR_azure_tenant_id=$TENANT_ID" >> $GITHUB_ENV
-            echo "TF_VAR_azure_subscription_id=$SUBSCRIPTION_ID" >> $GITHUB_ENV
-            echo "TF_VAR_key_vault_name=$KEYVAULT_NAME" >> $GITHUB_ENV
+            if [ $i -lt 3 ]; then sleep 10; fi
+          done
+
+          CLIENT_SECRET=$(az keyvault secret show \
+                  --vault-name $KEYVAULT_NAME \
+                  --name azure-client-secret \
+                  --query value -o tsv)
+
+          TENANT_ID=$(az keyvault secret show \
+                  --vault-name $KEYVAULT_NAME \
+                  --name azure-tenant-id \
+                  --query value -o tsv)
+
+          SUBSCRIPTION_ID=$(az keyvault secret show \
+                  --vault-name $KEYVAULT_NAME \
+                  --name azure-subscription-id \
+                  --query value -o tsv)
+        
+          # Mask secrets in logs
+          echo "::add-mask::$CLIENT_ID"
+          echo "::add-mask::$CLIENT_SECRET"
+          echo "::add-mask::$TENANT_ID"
+          echo "::add-mask::$SUBSCRIPTION_ID"
+          
+          # Export as environment variables for Terraform
+          echo "TF_VAR_azure_client_id=$CLIENT_ID" >> $GITHUB_ENV
+          echo "TF_VAR_azure_client_secret=$CLIENT_SECRET" >> $GITHUB_ENV
+          echo "TF_VAR_azure_tenant_id=$TENANT_ID" >> $GITHUB_ENV
+          echo "TF_VAR_azure_subscription_id=$SUBSCRIPTION_ID" >> $GITHUB_ENV
+          echo "TF_VAR_key_vault_name=$KEYVAULT_NAME" >> $GITHUB_ENV
 
       # 4. Setup Terraform
       - name: Setup Terraform
