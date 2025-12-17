@@ -43,7 +43,7 @@ jobs:
       - name: Retrieve Secrets from Key Vault
         uses: azure/CLI@v2
         with:
-          azcliversion: '2.55.0'
+          azcliversion: latest
           inlineScript: |
             # Exit on error
             set -e
